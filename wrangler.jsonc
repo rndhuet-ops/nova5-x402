@@ -33,7 +33,7 @@
         "pattern": "/wallet-decision",
         "price": "$0.01",
         "description": "NOVA5 Wallet Decision"
-      }},
+      },
 {
   "pattern": "/x402-preflight",
   "price": "$0.01",
