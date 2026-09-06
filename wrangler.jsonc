@@ -33,7 +33,12 @@
         "pattern": "/wallet-decision",
         "price": "$0.01",
         "description": "NOVA5 Wallet Decision"
-      }
+      }},
+{
+  "pattern": "/x402-preflight",
+  "price": "$0.01",
+  "description": "NOVA5 x402 Payment Preflight"
+}
     ],
 
     "ORIGIN_URL": "https://nova5-hober.yesterdays-signal.workers.dev",
