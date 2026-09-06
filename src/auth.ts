@@ -5,7 +5,7 @@
 import { Context, Next, MiddlewareHandler } from "hono";
 import { getCookie } from "hono/cookie";
 import { verifyJWT } from "./jwt";
-import { paymentMiddleware } from "x402-hono";
+import { paymentMiddleware } from "@x402/hono";
 import type { AppContext } from "./env";
 
 /**
