@@ -97,6 +97,73 @@ app.get("/openapi.json", (c) => {
           },
         },
       },
+
+      "/wallet-decision": {
+        get: {
+          summary: "Wallet Decision",
+          description:
+            "Returns a machine-ready Base wallet operational-readiness verdict using live balances and gas context.",
+          parameters: [
+            {
+              name: "address",
+              in: "query",
+              required: true,
+              schema: {
+                type: "string",
+              },
+              description: "EVM wallet address",
+            },
+          ],
+
+          "x-payment-info": {
+            protocols: ["x402"],
+            price: {
+              mode: "fixed",
+              currency: "USD",
+              amount: "0.01",
+            },
+          },
+
+          responses: {
+            "200": {
+              description: "Wallet Decision response",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      address: { type: "string" },
+                      usdc_balance: { type: "number" },
+                      native_balance: { type: "number" },
+                      gas_price_gwei: { type: "number" },
+                      risk_score: {
+                        type: "number",
+                        minimum: 0,
+                        maximum: 100,
+                      },
+                      verdict: {
+                        type: "string",
+                        enum: ["SAFE", "CAUTION", "RISKY"],
+                      },
+                      reasons: {
+                        type: "array",
+                        items: { type: "string" },
+                      },
+                      provenance: { type: "string" },
+                      block_number: { type: "number" },
+                      rpc_used: { type: "string" },
+                      timestamp: { type: "string" },
+                    },
+                  },
+                },
+              },
+            },
+            "402": {
+              description: "Payment Required",
+            },
+          },
+        },
+      },
     },
   });
 });
