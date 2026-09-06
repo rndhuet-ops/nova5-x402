@@ -24,7 +24,7 @@
 
     "PROTECTED_PATTERNS": [
       {
-        "pattern": "/wallet*",
+    "pattern": "/wallet",
         "price": "$0.001",
         "description": "Base Wallet Intelligence"
       }
