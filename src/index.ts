@@ -164,6 +164,85 @@ app.get("/openapi.json", (c) => {
           },
         },
       },
+
+      "/x402-preflight": {
+        get: {
+          summary: "x402 Payment Preflight",
+          description:
+            "Checks whether a Base wallet has enough native USDC balance to cover a requested x402 payment amount.",
+
+          parameters: [
+            {
+              name: "address",
+              in: "query",
+              required: true,
+              schema: {
+                type: "string",
+              },
+              description: "EVM wallet address",
+            },
+            {
+              name: "amount",
+              in: "query",
+              required: true,
+              schema: {
+                type: "string",
+                pattern: "^(?:0|[1-9]\\d*)(?:\\.\\d{1,6})?$",
+              },
+              description: "Requested USDC payment amount",
+            },
+          ],
+
+          "x-payment-info": {
+            protocols: ["x402"],
+            price: {
+              mode: "fixed",
+              currency: "USD",
+              amount: "0.01",
+            },
+          },
+
+          responses: {
+            "200": {
+              description: "x402 payment preflight response",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      service: { type: "string" },
+                      network: { type: "string" },
+                      chain: { type: "string" },
+                      asset: { type: "string" },
+                      asset_address: { type: "string" },
+                      address: { type: "string" },
+                      requested_usdc: { type: "string" },
+                      available_usdc: { type: "string" },
+                      remaining_usdc: { type: "string" },
+                      can_pay: { type: "boolean" },
+                      decision: {
+                        type: "string",
+                        enum: ["PROCEED", "FUND_USDC"],
+                      },
+                      reasons: {
+                        type: "array",
+                        items: { type: "string" },
+                      },
+                      provenance: { type: "string" },
+                      block_number: { type: "number" },
+                      rpc_used: { type: "string" },
+                      timestamp: { type: "string" },
+                    },
+                  },
+                },
+              },
+            },
+            "402": {
+              description: "Payment Required",
+            },
+          },
+        },
+      },
     },
   });
 });
