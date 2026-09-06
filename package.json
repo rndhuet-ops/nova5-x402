@@ -7,9 +7,10 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "@coinbase/x402": "2.0.0",
-    "hono": "4.11.1",
-    "x402-hono": "1.0.0"
+    "@x402/core": "^2.0.0",
+    "@x402/evm": "^2.0.0",
+    "@x402/hono": "^2.0.0",
+    "hono": "^4.11.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250906.0",
