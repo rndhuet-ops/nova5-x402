@@ -72,10 +72,25 @@ app.get("/openapi.json", (c) => {
           },
 
           responses: {
-            "200": {
-              description: "Wallet intelligence response",
-            },
-
+           "200": {
+  description: "Wallet intelligence response",
+  content: {
+    "application/json": {
+      schema: {
+        type: "object",
+        properties: {
+          usdc_balance: { type: "number" },
+          native_balance: { type: "number" },
+          block_number: { type: "number" },
+          block_timestamp: { type: "number" },
+          gas_price_wei: { type: "string" },
+          gas_price_gwei: { type: "number" },
+          provenance: { type: "string" }
+        }
+      }
+    }
+  }
+},
             "402": {
               description: "Payment Required",
             },
