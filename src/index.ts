@@ -23,8 +23,68 @@ const BUILTIN_PROTECTED_PATHS: ProtectedRouteConfig[] = [
  * Built-in public paths that don't require payment
  * These are used for testing and don't need to be configured
  */
-const BUILT_IN_PUBLIC_PATHS = ["/__x402/health", "/__x402/config"];
+const BUILT_IN_PUBLIC_PATHS = [
+  "/__x402/health",
+  "/__x402/config",
+  "/openapi.json",
+];
+app.get("/openapi.json", (c) => {
+  return c.json({
+    openapi: "3.1.0",
+    info: {
+      title: "NOVA5 Wallet Intelligence",
+      version: "1.0.0",
+      description: "Live Base wallet intelligence paid with USDC via x402",
+    },
 
+    "x-discovery": {
+      ownershipProofs: [
+        "0x2d59f2b91bb59a5959fe1f958b96f538108c95c7",
+      ],
+    },
+
+    paths: {
+      "/wallet": {
+        get: {
+          summary: "Base wallet intelligence",
+          description:
+            "Returns live USDC balance, ETH balance, block, timestamp and gas for a Base wallet.",
+
+          parameters: [
+            {
+              name: "address",
+              in: "query",
+              required: true,
+              schema: {
+                type: "string",
+              },
+              description: "EVM wallet address",
+            },
+          ],
+
+          "x-payment-info": {
+            protocols: ["x402"],
+            price: {
+              mode: "fixed",
+              currency: "USD",
+              amount: "0.001",
+            },
+          },
+
+          responses: {
+            "200": {
+              description: "Wallet intelligence response",
+            },
+
+            "402": {
+              description: "Payment Required",
+            },
+          },
+        },
+      },
+    },
+  });
+});
 /**
  * Get the request path without parsing the URL so normalization changes can be
  * detected before making an authorization decision.
