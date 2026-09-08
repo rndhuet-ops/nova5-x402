@@ -1,0 +1,16 @@
+name: NOVA5 Sentinel
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  wake-nova5:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run NOVA5 Sentinel
+        run: |
+          curl --fail --silent --show-error \
+          "https://nova5-hober.yesterdays-signal.workers.dev/test-cron"
